@@ -1,7 +1,8 @@
-import re 
-  
+import re
 
-  def clean_text(text):
-        text = text.lower()
-       text = re.sub(r'[^a-z0-9\s]', '', text)
-       return text
+def preprocess_text(text):
+    # Lowercase
+    text = text.lower()
+    # Remove non-alphanumeric characters
+    text = re.sub(r'[^a-z0-9\s]', '', text)
+    return text
