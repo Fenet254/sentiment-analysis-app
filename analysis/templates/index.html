@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Model Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+        }
+        
+        header {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, #2d2d2d, #0078d4);
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .project-structure {
+            background-color: #252526;
+            border-radius: 5px;
+            padding: 15px;
+            height: fit-content;
+        }
+        
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #cccccc;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-title-icon {
+            margin-right: 10px;
+        }
+        
+        .file-tree {
+            padding-left: 20px;
+        }
+        
+        .file-item {
+            padding: 5px 0;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .file-item:hover {
+            color: #ffffff;
+        }
+        
+        .file-icon {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .file-item.active {
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .folder {
+            margin-top: 10px;
+        }
+        
+        .folder-name {
+            font-weight: 600;
+            color: #6cb6ff;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+        
+        .folder-contents {
+            padding-left: 20px;
+            border-left: 1px dashed #3e3e42;
+            margin-left: 6px;
+        }
+        
+        .main-content {
+            background-color: #252526;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: #2d2d2d;
+            border-bottom: 1px solid #3e3e42;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: #2d2d2d;
+            cursor: pointer;
+            border-right: 1px solid #3e3e42;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+        
+        .tab.active {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        
+        .tab-icon {
+            margin-right: 8px;
+        }
+        
+        .tab-close {
+            margin-left: 10px;
+            opacity: 0.6;
+        }
+        
+        .editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .editor {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .code-line {
+            display: flex;
+            margin-bottom: 5px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+        }
+        
+        .line-number {
+            width: 40px;
+            color: #6e7681;
+            text-align: right;
+            padding-right: 15px;
+            user-select: none;
+        }
+        
+        .line-content {
+            flex: 1;
+        }
+        
+        .keyword {
+            color: #569cd6;
+        }
+        
+        .function {
+            color: #dcdcaa;
+        }
+        
+        .string {
+            color: #ce9178;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+        
+        .terminal {
+            background-color: #1e1e1e;
+            border-top: 1px solid #3e3e42;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .terminal-prompt {
+            color: #4ec9b0;
+        }
+        
+        .terminal-command {
+            color: #d4d4d4;
+        }
+        
+        .terminal-output {
+            color: #9cdcfe;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+        
+        .run-button {
+            background-color: #0e639c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .run-button:hover {
+            background-color: #1177bb;
+        }
+        
+        .run-icon {
+            margin-right: 8px;
+        }
+        
+        .status-bar {
+            grid-column: 1 / -1;
+            background-color: #007acc;
+            padding: 8px 15px;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        
+        .python-indicator {
+            display: flex;
+            align-items: center;
+        }
+        
+        .python-icon {
+            margin-right: 8px;
+        }
+        
+        .training-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .control-button {
+            background-color: #383838;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .control-button:hover {
+            background-color: #454545;
+        }
+        
+        .control-icon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sentiment Analysis Project - Model Training</h1>
+            <button class="run-button" onclick="runTraining()">
+                <span class="run-icon">▶</span> Run Training
+            </button>
+        </header>
+        
+        <div class="project-structure">
+            <div class="sidebar-title">
+                <span class="sidebar-title-icon">📁</span> PROJECT_STRUCTURE
+            </div>
+            
+            <div class="file-tree">
+                <div class="folder">
+                    <div class="folder-name">
+                        <span class="file-icon">📁</span> analysis
+                    </div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-name">
+                        <span class="file-icon">📁</span> app
+                    </div>
+                    <div class="folder-contents">
+                        <div class="file-item">
+                            <span class="file-icon">🐍</span> __init__.py
+                        </div>
+                        <div class="file-item">
+                            <span class="file-icon">🐍</span> routes.py
+                        </div>
+                        <div class="file-item">
+                            <span class="file-icon">🐍</span> utils.py
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-name">
+                        <span class="file-icon">📁</span> data
+                    </div>
+                    <div class="folder-contents">
+                        <div class="file-item">
+                            <span class="file-icon">📊</span> sentiment_data.csv
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-name">
+                        <span class="file-icon">📁</span> model
+                    </div>
+                    <div class="folder-contents">
+                        <div class="file-item">
+                            <span class="file-icon">🧠</span> sentiment_model.pkl
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-name">
+                        <span class="file-icon">📁</span> notebooks
+                    </div>
+                    <div class="folder-contents">
+                        <div class="file-item active">
+                            <span class="file-icon">📓</span> train_model.ipynb
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="file-item">
+                    <span class="file-icon">🐍</span> main.py
+                </div>
+                <div class="file-item">
+                    <span class="file-icon">📝</span> requirements.txt
+                </div>
+                <div class="file-item">
+                    <span class="file-icon">📖</span> README.md
+                </div>
+            </div>
+            
+            <div class="training-controls">
+                <button class="control-button">
+                    <span class="control-icon">⚙️</span> Import Data
+                </button>
+                <button class="control-button">
+                    <span class="control-icon">📊</span> Preprocess
+                </button>
+                <button class="control-button">
+                    <span class="control-icon">🧠</span> Train Model
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="tabs">
+                <div class="tab active">
+                    <span class="tab-icon">📓</span> notebooks/train_model.ipynb
+                    <span class="tab-close">×</span>
+                </div>
+                <div class="tab">
+                    <span class="tab-icon">🐍</span> app/utils.py
+                    <span class="tab-close">×</span>
+                </div>
+            </div>
+            
+            <div class="editor-container">
+                <div class="editor">
+                    <div class="code-line">
+                        <div class="line-number">1</div>
+                        <div class="line-content"><span class="comment"># Sentiment Analysis Model Training</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">2</div>
+                        <div class="line-content"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">3</div>
+                        <div class="line-content"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">4</div>
+                        <div class="line-content"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">5</div>
+                        <div class="line-content"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">6</div>
+                        <div class="line-content"><span class="keyword">import</span> joblib</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">7</div>
+                        <div class="line-content"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">8</div>
+                        <div class="line-content"><span class="comment"># Load the dataset</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">9</div>
+                        <div class="line-content">df = pd.read_csv(<span class="string">'../data/sentiment_data.csv'</span>)</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">10</div>
+                        <div class="line-content"><span class="comment"># Display first few rows</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">11</div>
+                        <div class="line-content">print(df.head())</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">12</div>
+                        <div class="line-content"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">13</div>
+                        <div class="line-content"><span class="comment"># Preprocess the data</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">14</div>
+                        <div class="line-content"><span class="comment"># ... (add your preprocessing code here)</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">15</div>
+                        <div class="line-content"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">16</div>
+                        <div class="line-content"><span class="comment"># Split the data</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">17</div>
+                        <div class="line-content">X_train, X_test, y_train, y_test = train_test_split(</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">18</div>
+                        <div class="line-content">    df[<span class="string">'text'</span>], df[<span class="string">'sentiment'</span>], test_size=0.2, random_state=42</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">19</div>
+                        <div class="line-content">)</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">20</div>
+                        <div class="line-content"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">21</div>
+                        <div class="line-content"><span class="comment"># Vectorize the text data</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">22</div>
+                        <div class="line-content">vectorizer = CountVectorizer()</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">23</div>
+                        <div class="line-content">X_train_vec = vectorizer.fit_transform(X_train)</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">24</div>
+                        <div class="line-content">X_test_vec = vectorizer.transform(X_test)</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">25</div>
+                        <div class="line-content"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">26</div>
+                        <div class="line-content"><span class="comment"># Train the model</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">27</div>
+                        <div class="line-content">model = MultinomialNB()</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">28</div>
+                        <div class="line-content">model.fit(X_train_vec, y_train)</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">29</div>
+                        <div class="line-content"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">30</div>
+                        <div class="line-content"><span class="comment"># Save the model and vectorizer</span></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">31</div>
+                        <div class="line-content">joblib.dump(model, <span class="string">'../model/sentiment_model.pkl'</span>)</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">32</div>
+                        <div class="line-content">joblib.dump(vectorizer, <span class="string">'../model/vectorizer.pkl'</span>)</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">33</div>
+                        <div class="line-content"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-number">34</div>
+                        <div class="line-content">print(<span class="string">"Model training completed and saved successfully!"</span>)</div>
+                    </div>
+                </div>
+                
+                <div class="terminal">
+                    <div class="terminal-prompt">$</div>
+                    <div class="terminal-command">python -m notebooks.train_model</div>
+                    <div class="terminal-output" id="output">Click "Run Training" to execute your model training code</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <div class="python-indicator">
+                <span class="python-icon">🐍</span> Python 3.9.7 64-bit ('venv': venv)
+            </div>
+            <div>Line 34, Column 50</div>
+        </div>
+    </div>
+
+    <script>
+        function runTraining() {
+            const output = document.getElementById('output');
+            output.innerHTML = "Running model training...<br>";
+            
+            // Simulate training process with steps
+            const steps = [
+                "Loading sentiment data from ../data/sentiment_data.csv",
+                "Preprocessing text data...",
+                "Splitting data into training and test sets",
+                "Vectorizing text features...",
+                "Training MultinomialNB model...",
+                "Model accuracy: 87.2%",
+                "Saving model to ../model/sentiment_model.pkl",
+                "Saving vectorizer to ../model/vectorizer.pkl",
+                "Model training completed successfully!"
+            ];
+            
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < steps.length) {
+                    output.innerHTML += `> ${steps[i]}<br>`;
+                    i++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 800);
+        }
+        
+        // Make folder names clickable to expand/collapse
+        document.querySelectorAll('.folder-name').forEach(folder => {
+            folder.addEventListener('click', () => {
+                const contents = folder.nextElementSibling;
+                if (contents.style.display === 'none') {
+                    contents.style.display = 'block';
+                } else {
+                    contents.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
