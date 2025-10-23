@@ -3,7 +3,7 @@ from app import app
 import joblib
 from app.utils import preprocess_text
 
-# Load the trained model
+
 model = joblib.load("model/sentiment_model.pkl")
 
 @app.route('/')
