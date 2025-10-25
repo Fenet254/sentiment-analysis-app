@@ -16,6 +16,7 @@ def index():
 def predict():
 
     text = request.form['text']
+
     processed_text = preprocess_text(text)
     prediction = model.predict([processed_text])[0]
     return jsonify({'prediction': prediction})
