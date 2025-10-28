@@ -1,16 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sentiment Analysis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis - Beautiful AI App</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Sentiment Analysis</h1>
-        <textarea id="text-input" placeholder="Type your text here..."></textarea>
-        <button onclick="predict()">Predict</button>
-        <p id="result"></p>
+    <div class="background">
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-brain"></i> Sentiment Analysis AI</h1>
+                <p>Discover the sentiment behind your words with advanced AI</p>
+            </header>
+
+            <main>
+                <div class="input-section">
+                    <div class="input-wrapper">
+                        <textarea id="text-input" placeholder="Enter your text here to analyze sentiment..."></textarea>
+                        <div class="input-actions">
+                            <button id="predict-btn" onclick="predict()">
+                                <i class="fas fa-magic"></i> Analyze Sentiment
+                            </button>
+                            <button id="clear-btn" onclick="clearText()">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <div id="result" class="result-display">
+                        <i class="fas fa-robot"></i>
+                        <p>Your sentiment analysis result will appear here</p>
+                    </div>
+                </div>
+
+                <div class="history-section">
+                    <h3><i class="fas fa-history"></i> Recent Analyses</h3>
+                    <div id="history-list" class="history-list">
+                        <p class="no-history">No analyses yet. Try analyzing some text!</p>
+                    </div>
+                    <button id="clear-history-btn" onclick="clearHistory()" class="clear-history-btn">
+                        <i class="fas fa-trash"></i> Clear History
+                    </button>
+                </div>
+            </main>
+
+            <footer>
+                <p>Powered by Machine Learning & Flask</p>
+            </footer>
+        </div>
     </div>
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-cog fa-spin"></i>
+            <p>Analyzing sentiment...</p>
+        </div>
+    </div>
+
     <script src="/static/js/app.js"></script>
 </body>
 </html>
