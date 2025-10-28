@@ -11,7 +11,7 @@
 - [x] Edit analysis/app/utils.py to enhance text preprocessing (e.g., remove stopwords, stemming)
 
 ## 4. Complete backend
-- [ ] Edit analysis/app/routes.py to add error handling, logging, prediction history (in session), batch prediction route
+- [x] Edit analysis/app/routes.py to add error handling, logging, prediction history (in session), batch prediction route
 
 ## 5. Enhance UI to be the most beautiful
 - [ ] Edit analysis/templates/index.html for modern layout with icons and animations
