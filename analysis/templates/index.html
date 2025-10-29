@@ -1,80 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sentiment Analysis - Beautiful AI App</title>
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="background">
-        <div class="container">
-            <header>
-                <div class="header-content">
-                    <div class="title-section">
-                        <h1><i class="fas fa-brain"></i> Sentiment Analysis AI</h1>
-                        <p>Discover the sentiment behind your words with advanced AI</p>
-                    </div>
-                    <div class="theme-toggle">
-                        <button id="theme-toggle" class="theme-btn">
-                            <i class="fas fa-moon"></i>
-                            <span>Dark Mode</span>
-                        </button>
-                    </div>
-                </div>
-            </header>
+      <div class="container">
+        <header>
+          <div class="header-content">
+            <div class="title-section">
+              <h1><i class="fas fa-brain"></i> Sentiment Analysis AI</h1>
+              <p>Discover the sentiment behind your words with advanced AI</p>
+            </div>
+            <div class="theme-toggle">
+              <button id="theme-toggle" class="theme-btn">
+                <i class="fas fa-moon"></i>
+                <span>Dark Mode</span>
+              </button>
+            </div>
+          </div>
+        </header>
 
-            <main>
-                <div class="input-section">
-                    <div class="input-wrapper">
-                        <textarea id="text-input" placeholder="Enter your text here to analyze sentiment..."></textarea>
-                        <div class="input-actions">
-                            <button id="predict-btn" onclick="predict()">
-                                <i class="fas fa-magic"></i> Analyze Sentiment
-                            </button>
-                            <button id="clear-btn" onclick="clearText()">
-                                <i class="fas fa-eraser"></i> Clear
-                            </button>
-                        </div>
-                    </div>
+        <main>
+          <section class="card input-section">
+            <div class="card-header">
+              <h2><i class="fas fa-edit"></i> Input Text</h2>
+            </div>
+            <div class="card-body">
+              <div class="input-wrapper">
+                <textarea
+                  id="text-input"
+                  placeholder="Enter your text here to analyze sentiment..."
+                ></textarea>
+                <div class="input-actions">
+                  <button id="predict-btn" onclick="predict()">
+                    <i class="fas fa-magic"></i> Analyze Sentiment
+                  </button>
+                  <button id="clear-btn" onclick="clearText()">
+                    <i class="fas fa-eraser"></i> Clear
+                  </button>
                 </div>
+              </div>
+            </div>
+          </section>
 
-                <div class="result-section">
-                    <div id="result" class="result-display">
-                        <i class="fas fa-robot"></i>
-                        <p>Your sentiment analysis result will appear here</p>
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" id="confidence-fill"></div>
-                            <span class="confidence-text" id="confidence-text">0%</span>
-                        </div>
-                    </div>
+          <section class="card result-section">
+            <div class="card-header">
+              <h2><i class="fas fa-chart-line"></i> Analysis Result</h2>
+            </div>
+            <div class="card-body">
+              <div id="result" class="result-display">
+                <i class="fas fa-robot"></i>
+                <p>Your sentiment analysis result will appear here</p>
+                <div class="confidence-bar">
+                  <div class="confidence-fill" id="confidence-fill"></div>
+                  <span class="confidence-text" id="confidence-text">0%</span>
                 </div>
+              </div>
+            </div>
+          </section>
 
-                <div class="history-section">
-                    <h3><i class="fas fa-history"></i> Recent Analyses</h3>
-                    <div id="history-list" class="history-list">
-                        <p class="no-history">No analyses yet. Try analyzing some text!</p>
-                    </div>
-                    <button id="clear-history-btn" onclick="clearHistory()" class="clear-history-btn">
-                        <i class="fas fa-trash"></i> Clear History
-                    </button>
-                </div>
-            </main>
+          <section class="card history-section">
+            <div class="card-header">
+              <h2><i class="fas fa-history"></i> Recent Analyses</h2>
+            </div>
+            <div class="card-body">
+              <div id="history-list" class="history-list">
+                <p class="no-history">
+                  No analyses yet. Try analyzing some text!
+                </p>
+              </div>
+              <button
+                id="clear-history-btn"
+                onclick="clearHistory()"
+                class="clear-history-btn"
+              >
+                <i class="fas fa-trash"></i> Clear History
+              </button>
+            </div>
+          </section>
+        </main>
 
-            <footer>
-                <p>Powered by Machine Learning & Flask</p>
-            </footer>
-        </div>
+        <footer>
+          <p>Powered by Machine Learning & Flask</p>
+        </footer>
+      </div>
     </div>
 
     <div id="loading-overlay" class="loading-overlay">
-        <div class="loading-spinner">
-            <i class="fas fa-cog fa-spin"></i>
-            <p>Analyzing sentiment...</p>
-        </div>
+      <div class="loading-spinner">
+        <i class="fas fa-cog fa-spin"></i>
+        <p>Analyzing sentiment...</p>
+      </div>
     </div>
 
     <script src="/static/js/app.js"></script>
-</body>
+  </body>
 </html>
