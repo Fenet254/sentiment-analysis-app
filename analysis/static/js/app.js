@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadHistory();
+    initThemeToggle();
+    initConfidenceBar();
 });
 
 function predict() {
@@ -50,10 +52,26 @@ function showResult(message, type = "neutral") {
     if (type === "positive") icon = "fa-smile";
     else if (type === "negative") icon = "fa-frown";
 
+    // Extract confidence from message if present
+    const confidenceMatch = message.match(/(\d+)%/);
+    const confidence = confidenceMatch ? parseInt(confidenceMatch[1]) : 0;
+
     resultDiv.innerHTML = `
         <i class="fas ${icon}"></i>
         <p>${message}</p>
+        <div class="confidence-bar">
+            <div class="confidence-fill" id="confidence-fill"></div>
+            <span class="confidence-text" id="confidence-text">${confidence}%</span>
+        </div>
     `;
+
+    // Animate confidence bar
+    setTimeout(() => {
+        const fill = document.getElementById("confidence-fill");
+        if (fill) {
+            fill.style.width = `${confidence}%`;
+        }
+    }, 100);
 
     // Add animation
     resultDiv.style.animation = "none";
@@ -104,6 +122,50 @@ function clearHistory() {
 function showLoading(show) {
     const overlay = document.getElementById("loading-overlay");
     overlay.style.display = show ? "flex" : "none";
+}
+
+// Theme toggle functionality
+function initThemeToggle() {
+    const themeBtn = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        body.classList.add("dark-mode");
+        updateThemeButton(true);
+    }
+
+    themeBtn.addEventListener("click", function() {
+        const isDark = body.classList.toggle("dark-mode");
+        updateThemeButton(isDark);
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+}
+
+function updateThemeButton(isDark) {
+    const themeBtn = document.getElementById("theme-toggle");
+    const icon = themeBtn.querySelector("i");
+    const span = themeBtn.querySelector("span");
+
+    if (isDark) {
+        icon.className = "fas fa-sun";
+        span.textContent = "Light Mode";
+        themeBtn.classList.add("active");
+    } else {
+        icon.className = "fas fa-moon";
+        span.textContent = "Dark Mode";
+        themeBtn.classList.remove("active");
+    }
+}
+
+// Initialize confidence bar
+function initConfidenceBar() {
+    // Reset confidence bar on page load
+    const fill = document.getElementById("confidence-fill");
+    const text = document.getElementById("confidence-text");
+    if (fill) fill.style.width = "0%";
+    if (text) text.textContent = "0%";
 }
 
 // Allow Enter key to trigger prediction

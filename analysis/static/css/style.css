@@ -34,6 +34,19 @@ header {
     color: white;
 }
 
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.title-section {
+    flex: 1;
+    text-align: left;
+}
+
 header h1 {
     font-size: 3rem;
     margin-bottom: 10px;
@@ -47,13 +60,47 @@ header p {
     animation: fadeInUp 1.2s ease-out;
 }
 
+.theme-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.theme-btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.theme-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.theme-btn i {
+    transition: transform 0.3s ease;
+}
+
+.theme-btn.active .fa-sun {
+    transform: rotate(180deg);
+}
+
 /* Main content */
 main {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 30px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     animation: slideInUp 0.8s ease-out;
 }
 
@@ -154,6 +201,35 @@ button {
 .result-display p {
     font-size: 1.1rem;
     font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.confidence-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    width: 0%;
+    transition: width 1s ease-out;
+    border-radius: 4px;
+}
+
+.confidence-text {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .result-positive {
@@ -301,10 +377,79 @@ footer {
     }
 }
 
+/* Dark mode styles */
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #e9ecef;
+}
+
+body.dark-mode .background {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.05"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.05"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+}
+
+body.dark-mode main {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode textarea {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #e9ecef;
+}
+
+body.dark-mode textarea:focus {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .history-section h3 {
+    color: #e9ecef;
+}
+
+body.dark-mode .history-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #e9ecef;
+}
+
+body.dark-mode .history-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .history-item .text {
+    color: #adb5bd;
+}
+
+body.dark-mode .history-item .confidence {
+    color: #adb5bd;
+}
+
+/* Enhanced animations */
+button:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+.history-item:hover {
+    transform: translateX(10px) scale(1.01);
+}
+
+textarea:focus {
+    transform: scale(1.01);
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .title-section {
+        text-align: center;
     }
 
     header h1 {
@@ -320,6 +465,11 @@ footer {
     }
 
     button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .theme-btn {
         width: 100%;
         justify-content: center;
     }

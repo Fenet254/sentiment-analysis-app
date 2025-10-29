@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentiment Analysis - Beautiful AI App</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="background">
         <div class="container">
             <header>
-                <h1><i class="fas fa-brain"></i> Sentiment Analysis AI</h1>
-                <p>Discover the sentiment behind your words with advanced AI</p>
+                <div class="header-content">
+                    <div class="title-section">
+                        <h1><i class="fas fa-brain"></i> Sentiment Analysis AI</h1>
+                        <p>Discover the sentiment behind your words with advanced AI</p>
+                    </div>
+                    <div class="theme-toggle">
+                        <button id="theme-toggle" class="theme-btn">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark Mode</span>
+                        </button>
+                    </div>
+                </div>
             </header>
 
             <main>
@@ -34,6 +44,10 @@
                     <div id="result" class="result-display">
                         <i class="fas fa-robot"></i>
                         <p>Your sentiment analysis result will appear here</p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidence-fill"></div>
+                            <span class="confidence-text" id="confidence-text">0%</span>
+                        </div>
                     </div>
                 </div>
 
