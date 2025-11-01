@@ -10,6 +10,7 @@ from app.utils import preprocess_text
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 model = joblib.load("model/sentiment_model.pkl")
 
 @app.route('/')
