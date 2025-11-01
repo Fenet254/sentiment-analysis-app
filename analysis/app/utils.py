@@ -6,6 +6,7 @@ from nltk.stem import PorterStemmer
 # Download NLTK data if not present
 nltk.download('stopwords', quiet=True)
 
+
 def preprocess_text(text):
     text = text.lower()
     text = re.sub(r'[^a-z0-9\s]', '', text)
