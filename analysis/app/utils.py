@@ -15,4 +15,5 @@ def preprocess_text(text):
     words = [word for word in words if word not in stop_words]
     stemmer = PorterStemmer()
     words = [stemmer.stem(word) for word in words]
+
     return ' '.join(words)
