@@ -17,6 +17,7 @@ model = joblib.load("model/sentiment_model.pkl")
 def index():
     return render_template("index.html")
 
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
