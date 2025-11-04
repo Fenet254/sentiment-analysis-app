@@ -1,10 +1,14 @@
 
 
 from flask import request, jsonify, render_template, session, flash
+from flask_cors import CORS
 from app import app
 import joblib
 import logging
 from app.utils import preprocess_text
+
+# Enable CORS for Next.js frontend
+CORS(app)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
