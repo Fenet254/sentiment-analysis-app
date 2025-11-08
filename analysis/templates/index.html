@@ -1,739 +1,115 @@
 <!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+    <title>Sentiment Analysis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis - Beautiful AI App</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background">
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-brain"></i> Sentiment Analysis AI</h1>
+                <p>Discover the sentiment behind your words with advanced AI</p>
+            </header>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sentiment Analyzer</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#137fec",
-              "background-light": "#f6f7f8",
-              "background-dark": "#101922",
-              "positive": "#28a745",
-              "negative": "#dc3545",
-              "neutral": "#6c757d",
-              "card-light": "#ffffff",
-              "card-dark": "#1e293b",
-              "text-light": "#212529",
-              "text-dark": "#e2e8f0",
-              "text-secondary-light": "#6C757D",
-              "text-secondary-dark": "#94a3b8",
-            },
-            fontFamily: {
-              "display": ["Space Grotesk", "sans-serif"]
-            },
-            borderRadius: {
-              "DEFAULT": "0.25rem",
-              "lg": "0.5rem",
-              "xl": "0.75rem",
-              "full": "9999px"
-            },
-          },
-        },
-      }
-    </script>
-<style>
-      .material-symbols-outlined {
-        font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24
-      }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
-<div class="relative flex min-h-screen w-full flex-col">
-<!-- Top App Bar -->
-<header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-slate-200/50 bg-background-light/80 px-4 backdrop-blur-sm dark:border-slate-800/50 dark:bg-background-dark/80">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-3xl">sentiment_satisfied</span>
-<h1 class="text-xl font-bold leading-tight tracking-tighter">Sentiment Analyzer</h1>
-</div>
-<button class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-slate-200/50 text-slate-600 dark:bg-slate-700/50 dark:text-slate-300">
-<span class="material-symbols-outlined">dark_mode</span>
-</button>
-</header>
-<main class="flex flex-col gap-6 p-4 pb-8 md:p-6 lg:p-8">
-<!-- Main Card/Input Area -->
-<section class="rounded-xl border border-slate-200 bg-card-light p-4 shadow-sm dark:border-slate-800 dark:bg-card-dark md:p-6">
-<h2 class="text-[32px] font-bold leading-tight tracking-tighter text-text-light dark:text-text-dark">Real-Time Sentiment Analysis</h2>
-<p class="pt-1 pb-4 text-base font-normal text-text-secondary-light dark:text-text-secondary-dark">Enter text, a tweet, or a review to see the sentiment.</p>
-<div class="flex flex-col gap-4">
-<label class="flex w-full flex-col">
-<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-slate-300 bg-slate-50 p-[15px] text-base font-normal leading-normal text-text-light placeholder:text-text-secondary-light focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900/50 dark:text-text-dark dark:placeholder:text-text-secondary-dark dark:focus:border-primary" placeholder="Enter text to analyze..." rows="5"></textarea>
-</label>
-<button class="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-5 text-base font-bold leading-normal tracking-[0.015em] text-white transition-opacity hover:opacity-90">
-<span>Analyze</span>
-</button>
-</div>
-</section>
-<!-- Results Display Area -->
-<section class="rounded-xl border border-slate-200 bg-card-light p-4 shadow-sm dark:border-slate-800 dark:bg-card-dark md:p-6">
-<div class="flex flex-col items-center justify-center gap-4 text-center">
-<span class="material-symbols-outlined text-7xl text-positive">sentiment_very_satisfied</span>
-<h3 class="text-2xl font-bold text-text-light dark:text-text-dark">Positive</h3>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Confidence Scores</p>
-<div class="w-full max-w-sm space-y-3 pt-2">
-<!-- Positive Score Bar -->
-<div class="space-y-1">
-<div class="flex justify-between text-sm font-medium text-positive">
-<span>Positive</span>
-<span>92%</span>
-</div>
-<div class="h-2 w-full rounded-full bg-slate-200 dark:bg-slate-700">
-<div class="h-2 rounded-full bg-positive" style="width: 92%;"></div>
-</div>
-</div>
-<!-- Negative Score Bar -->
-<div class="space-y-1">
-<div class="flex justify-between text-sm font-medium text-negative">
-<span>Negative</span>
-<span>5%</span>
-</div>
-<div class="h-2 w-full rounded-full bg-slate-200 dark:bg-slate-700">
-<div class="h-2 rounded-full bg-negative" style="width: 5%;"></div>
-</div>
-</div>
-<!-- Neutral Score Bar -->
-<div class="space-y-1">
-<div class="flex justify-between text-sm font-medium text-neutral">
-<span>Neutral</span>
-<span>3%</span>
-</div>
-<div class="h-2 w-full rounded-full bg-slate-200 dark:bg-slate-700">
-<div class="h-2 rounded-full bg-neutral" style="width: 3%;"></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- History Section -->
-<section>
-<h2 class="px-2 pb-3 text-xl font-bold">Recent Analyses</h2>
-<div class="flex flex-col gap-3">
-<!-- History Card 1 -->
-<div class="flex cursor-pointer items-center gap-4 rounded-xl border border-slate-200 bg-card-light p-4 shadow-sm transition-all hover:border-primary/50 hover:shadow-md dark:border-slate-800 dark:bg-card-dark dark:hover:border-primary/50">
-<span class="material-symbols-outlined text-2xl text-positive">sentiment_very_satisfied</span>
-<div class="flex-1">
-<p class="truncate text-text-light dark:text-text-dark">This is the best product I have ever used! Absolutely fantastic.</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">5m ago</p>
-</div>
-</div>
-<!-- History Card 2 -->
-<div class="flex cursor-pointer items-center gap-4 rounded-xl border border-slate-200 bg-card-light p-4 shadow-sm transition-all hover:border-primary/50 hover:shadow-md dark:border-slate-800 dark:bg-card-dark dark:hover:border-primary/50">
-<span class="material-symbols-outlined text-2xl text-negative">sentiment_very_dissatisfied</span>
-<div class="flex-1">
-<p class="truncate text-text-light dark:text-text-dark">I'm very disappointed with the quality, it broke after one day.</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">1h ago</p>
-</div>
-</div>
-<!-- History Card 3 -->
-<div class="flex cursor-pointer items-center gap-4 rounded-xl border border-slate-200 bg-card-light p-4 shadow-sm transition-all hover:border-primary/50 hover:shadow-md dark:border-slate-800 dark:bg-card-dark dark:hover:border-primary/50">
-<span class="material-symbols-outlined text-2xl text-neutral">sentiment_neutral</span>
-<div class="flex-1">
-<p class="truncate text-text-light dark:text-text-dark">The package arrived on time as expected.</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">3h ago</p>
-</div>
-</div>
-<!-- History Empty State -->
-<div class="hidden flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 py-10 text-center dark:border-slate-700">
-<span class="material-symbols-outlined text-4xl text-text-secondary-light dark:text-text-secondary-dark">history</span>
-<p class="font-medium text-text-light dark:text-text-dark">No analyses yet</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Enter some text to get started!</p>
-</div>
-</div>
-</section>
-</main>
-</div>
-</body></html>
-<!DOCTYPE html>
+            <main>
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button class="tab-btn active" onclick="switchTab('single')">
+                        <i class="fas fa-edit"></i> Single Analysis
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('batch')">
+                        <i class="fas fa-file-csv"></i> Batch Analysis
+                    </button>
+                </div>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Batch Sentiment Analysis</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#137fec",
-                        "background-light": "#f4f6f8",
-                        "background-dark": "#101922",
-                        "positive": "#2ECC71",
-                        "negative": "#E74C3C",
-                        "neutral": "#95A5A6",
-                    },
-                    fontFamily: {
-                        "display": ["Space Grotesk", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative flex min-h-screen w-full flex-col">
-<!-- Top App Bar -->
-<header class="flex items-center p-4 bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10">
-<div class="text-gray-800 dark:text-white flex size-10 shrink-0 items-center justify-center">
-<span class="material-symbols-outlined text-2xl">arrow_back</span>
-</div>
-<h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Batch Analysis</h2>
-</header>
-<main class="flex flex-col p-4 space-y-8">
-<!-- Section 1: Upload File -->
-<section class="flex flex-col space-y-4">
-<div class="px-4">
-<h1 class="text-gray-900 dark:text-white text-[32px] font-bold leading-tight tracking-[-0.015em]">Batch Sentiment Analysis</h1>
-<p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal pt-2">Upload a .txt or .csv file to analyze its sentiment.</p>
-</div>
-<!-- EmptyState / Upload Card -->
-<div class="flex flex-col items-center gap-6 rounded-xl border-2 border-dashed border-primary/30 dark:border-primary/50 px-6 py-14 bg-primary/10 dark:bg-primary/20">
-<div class="flex max-w-[480px] flex-col items-center gap-2">
-<p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] max-w-[480px] text-center">Drag &amp; drop your file here</p>
-<p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal max-w-[480px] text-center">Accepted file types: .txt, .csv</p>
-</div>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
-<span class="truncate">Select File</span>
-</button>
-</div>
-</section>
-<!-- Section 2: Processing File -->
-<section class="flex flex-col space-y-4">
-<div class="px-4">
-<h1 class="text-gray-900 dark:text-white text-[32px] font-bold leading-tight tracking-[-0.015em]">Analyzing...</h1>
-<p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal pt-2">Your file is being processed. Please wait a moment.</p>
-</div>
-<!-- Progress Bar Card -->
-<div class="flex flex-col gap-4 p-6 rounded-xl bg-white dark:bg-gray-800/50 shadow-sm border border-gray-200 dark:border-gray-700">
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-12 rounded-full bg-primary/20">
-<span class="material-symbols-outlined text-primary text-3xl">hourglass_top</span>
-</div>
-<div class="flex-1">
-<div class="flex justify-between">
-<p class="text-gray-900 dark:text-white text-base font-medium leading-normal">Analyzing your file...</p>
-<p class="text-primary text-sm font-bold leading-normal">65%</p>
-</div>
-<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Processing filename.csv</p>
-</div>
-</div>
-<div class="w-full rounded-full bg-gray-200 dark:bg-gray-700">
-<div class="h-2 rounded-full bg-primary" style="width: 65%;"></div>
-</div>
-</div>
-</section>
-<!-- Section 3: Results -->
-<section class="flex flex-col space-y-4">
-<div class="px-4">
-<h1 class="text-gray-900 dark:text-white text-[32px] font-bold leading-tight tracking-[-0.015em]">Analysis Complete!</h1>
-<p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal pt-2">Your sentiment analysis report is ready.</p>
-</div>
-<!-- Results Card -->
-<div class="flex flex-col gap-6 p-6 rounded-xl bg-white dark:bg-gray-800/50 shadow-sm border border-gray-200 dark:border-gray-700">
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-12 rounded-full bg-positive/20">
-<span class="material-symbols-outlined text-positive text-3xl">task_alt</span>
-</div>
-<div class="flex-1">
-<p class="text-gray-900 dark:text-white text-base font-medium leading-normal">filename.csv</p>
-<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Analysis successful</p>
-</div>
-</div>
-<!-- Buttons -->
-<div class="flex flex-col gap-3">
-<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal">
-<span class="material-symbols-outlined text-xl">download</span>
-<span class="truncate">Download Report (.csv)</span>
-</button>
-<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-5 bg-transparent text-primary text-base font-bold leading-normal border-2 border-primary/30 hover:bg-primary/10">
-<span class="material-symbols-outlined text-xl">refresh</span>
-<span class="truncate">Start New Analysis</span>
-</button>
-</div>
-</div>
-</section>
-<!-- Section 4: Error State -->
-<section class="flex flex-col space-y-4">
-<div class="px-4">
-<h1 class="text-gray-900 dark:text-white text-[32px] font-bold leading-tight tracking-[-0.015em]">Analysis Failed</h1>
-<p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal pt-2">There was an issue with your file.</p>
-</div>
-<!-- Error Card -->
-<div class="flex flex-col gap-6 p-6 rounded-xl bg-white dark:bg-gray-800/50 shadow-sm border border-negative dark:border-negative/70">
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-12 rounded-full bg-negative/20">
-<span class="material-symbols-outlined text-negative text-3xl">error</span>
-</div>
-<div class="flex-1">
-<p class="text-gray-900 dark:text-white text-base font-medium leading-normal">Invalid File Type</p>
-<p class="text-negative dark:text-negative/90 text-sm font-normal leading-normal">Please upload a valid .txt or .csv file.</p>
-</div>
-</div>
-<div class="flex flex-col gap-3">
-<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal">
-<span class="material-symbols-outlined text-xl">upload_file</span>
-<span class="truncate">Try Again</span>
-</button>
-</div>
-</div>
-</section>
-</main>
-</div>
-</body></html>
-<!DOCTYPE html>
+                <!-- Single Analysis Tab -->
+                <div id="single-tab" class="tab-content active">
+                    <div class="input-section">
+                        <div class="input-wrapper">
+                            <textarea id="text-input" placeholder="Enter your text here to analyze sentiment..."></textarea>
+                            <div class="input-actions">
+                                <button id="predict-btn" onclick="predict()">
+                                    <i class="fas fa-magic"></i> Analyze Sentiment
+                                </button>
+                                <button id="clear-btn" onclick="clearText()">
+                                    <i class="fas fa-eraser"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Analysis History</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#137fec",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#101922",
-                        "positive": "#28A745",
-                        "neutral": "#6C757D",
-                        "negative": "#DC3545"
-                    },
-                    fontFamily: {
-                        "display": ["Space Grotesk", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
-<style type="text/tailwindcss">
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            font-size: 24px;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative flex h-auto min-h-screen w-full flex-col">
-<!-- Top App Bar -->
-<div class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
-<div class="flex items-center p-4 justify-between text-slate-800 dark:text-white">
-<div class="flex size-12 shrink-0 items-center">
-<span class="material-symbols-outlined text-3xl">history</span>
-</div>
-<h2 class="text-xl font-bold flex-1 text-center">Analysis History</h2>
-<div class="flex w-12 items-center justify-end">
-<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-slate-800 dark:text-white gap-2 text-base font-bold min-w-0 p-0">
-<span class="material-symbols-outlined">tune</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Search Bar -->
-<div class="px-4 py-3">
-<label class="flex flex-col min-w-40 h-12 w-full">
-<div class="flex w-full flex-1 items-stretch rounded-xl h-full shadow-sm">
-<div class="text-slate-500 dark:text-slate-400 flex border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 items-center justify-center pl-4 rounded-l-xl border-y border-l">
-<span class="material-symbols-outlined">search</span>
-</div>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary/50 border-y border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 pl-2 text-base font-normal leading-normal" placeholder="Search by keyword or file name..." value=""/>
-</div>
-</label>
-</div>
-<!-- Analysis History Cards -->
-<div class="flex flex-col gap-4 p-4">
-<!-- Card 1: Positive -->
-<div class="flex gap-3 items-stretch justify-between rounded-xl bg-white dark:bg-slate-800/50 p-4 shadow-sm border border-transparent dark:border-slate-700/50">
-<div class="w-1.5 bg-positive rounded-full"></div>
-<div class="flex flex-1 flex-col gap-3">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center">
-<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Real-time</p>
-<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Oct 26, 2023</p>
-</div>
-<p class="text-slate-800 dark:text-white text-base font-medium leading-tight">The new interface is incredibly intuitive and user-friendly...</p>
-<p class="text-positive text-sm font-bold">Positive - 92%</p>
-</div>
-</div>
-</div>
-<!-- Card 2: Negative -->
-<div class="flex gap-3 items-stretch justify-between rounded-xl bg-white dark:bg-slate-800/50 p-4 shadow-sm border border-transparent dark:border-slate-700/50">
-<div class="w-1.5 bg-negative rounded-full"></div>
-<div class="flex flex-1 flex-col gap-3">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center">
-<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">File Upload</p>
-<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Oct 25, 2023</p>
-</div>
-<p class="text-slate-800 dark:text-white text-base font-medium leading-tight">Customer_Feedback_Q2.csv</p>
-<p class="text-negative text-sm font-bold">Negative - 85%</p>
-</div>
-</div>
-</div>
-<!-- Card 3: Neutral -->
-<div class="flex gap-3 items-stretch justify-between rounded-xl bg-white dark:bg-slate-800/50 p-4 shadow-sm border border-transparent dark:border-slate-700/50">
-<div class="w-1.5 bg-neutral rounded-full"></div>
-<div class="flex flex-1 flex-col gap-3">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center">
-<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Real-time</p>
-<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Oct 24, 2023</p>
-</div>
-<p class="text-slate-800 dark:text-white text-base font-medium leading-tight">The product is okay, not great but not terrible either.</p>
-<p class="text-neutral text-sm font-bold">Neutral - 60%</p>
-</div>
-</div>
-</div>
-<!-- Empty State Card -->
-<div class="flex flex-col items-center justify-center text-center p-10 mt-8 rounded-xl bg-slate-100 dark:bg-slate-800/30">
-<span class="material-symbols-outlined text-5xl text-slate-400 dark:text-slate-500 mb-4">upcoming</span>
-<h3 class="text-lg font-bold text-slate-700 dark:text-slate-200">No More Analyses</h3>
-<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">You've reached the end of your history.</p>
-</div>
-</div>
-<!-- Floating Action Button (FAB) -->
-<button class="fixed bottom-6 right-6 flex h-14 w-14 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary text-white shadow-lg transition-transform hover:scale-105 active:scale-95">
-<span class="material-symbols-outlined text-3xl">add</span>
-</button>
-</div>
-</body></html>
-<!DOCTYPE html>
+                    <div class="result-section">
+                        <div id="result" class="result-display">
+                            <i class="fas fa-robot"></i>
+                            <p>Your sentiment analysis result will appear here</p>
+                        </div>
+                    </div>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sentiment Analytics Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#137fec",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#101922",
-                    },
-                    fontFamily: {
-                        "display": ["Space Grotesk", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px",
-                    },
-                },
-            },
-        }
-    </script>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
-<div class="relative flex min-h-screen w-full flex-col">
-<!-- Top App Bar -->
-<div class="sticky top-0 z-10 flex items-center justify-between bg-background-light dark:bg-background-dark p-4 shadow-sm dark:shadow-md dark:shadow-black/20">
-<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Sentiment Analytics</h1>
-<button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent p-2 text-gray-600 dark:text-gray-300">
-<span class="material-symbols-outlined">filter_list</span>
-</button>
-</div>
-<!-- Tabs -->
-<div class="border-b border-gray-200 dark:border-gray-700/80 px-4">
-<div class="flex justify-between">
-<a class="flex flex-1 flex-col items-center justify-center border-b-2 border-b-primary pb-3 pt-4 text-primary" href="#">
-<p class="text-sm font-bold leading-normal">Overview</p>
-</a>
-<a class="flex flex-1 flex-col items-center justify-center border-b-2 border-b-transparent pb-3 pt-4 text-gray-500 dark:text-gray-400" href="#">
-<p class="text-sm font-bold leading-normal">Trends</p>
-</a>
-<a class="flex flex-1 flex-col items-center justify-center border-b-2 border-b-transparent pb-3 pt-4 text-gray-500 dark:text-gray-400" href="#">
-<p class="text-sm font-bold leading-normal">Keywords</p>
-</a>
-</div>
-</div>
-<div class="flex-1 space-y-6 p-4">
-<!-- Section Header: Overall Sentiment -->
-<h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Overall Sentiment</h2>
-<!-- Stats Cards -->
-<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-<div class="flex flex-col gap-2 rounded-xl bg-white dark:bg-gray-800/50 p-6 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-gray-700/80">
-<p class="text-base font-medium text-gray-600 dark:text-gray-300">Positive</p>
-<p class="text-3xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">75%</p>
-<p class="text-base font-medium text-green-500">+2.5%</p>
-</div>
-<div class="flex flex-col gap-2 rounded-xl bg-white dark:bg-gray-800/50 p-6 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-gray-700/80">
-<p class="text-base font-medium text-gray-600 dark:text-gray-300">Negative</p>
-<p class="text-3xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">15%</p>
-<p class="text-base font-medium text-red-500">-1.2%</p>
-</div>
-<div class="flex flex-col gap-2 rounded-xl bg-white dark:bg-gray-800/50 p-6 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-gray-700/80">
-<p class="text-base font-medium text-gray-600 dark:text-gray-300">Neutral</p>
-<p class="text-3xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">10%</p>
-<p class="text-base font-medium text-green-500">+0.3%</p>
-</div>
-</div>
-<!-- Section Header: Sentiment Distribution -->
-<h2 class="pt-4 text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Sentiment Distribution</h2>
-<!-- Donut Chart Card -->
-<div class="rounded-xl bg-white dark:bg-gray-800/50 p-6 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-gray-700/80">
-<div class="flex flex-col items-center justify-center gap-6 sm:flex-row">
-<div class="relative flex h-48 w-48 items-center justify-center">
-<svg class="h-full w-full" viewbox="0 0 36 36">
-<circle class="stroke-current text-red-500/30 dark:text-red-500/20" cx="18" cy="18" fill="none" r="15.9154943092" stroke-width="3.5"></circle>
-<circle class="stroke-current text-gray-400/30 dark:text-gray-500/20" cx="18" cy="18" fill="none" r="15.9154943092" stroke-dasharray="15, 85" stroke-dashoffset="-75" stroke-width="3.5"></circle>
-<circle class="stroke-current text-green-500/40" cx="18" cy="18" fill="none" r="15.9154943092" stroke-dasharray="75, 25" stroke-width="3.5"></circle>
-</svg>
-<div class="absolute flex flex-col items-center">
-<span class="text-3xl font-bold text-gray-900 dark:text-white">75%</span>
-<span class="text-sm font-medium text-gray-500 dark:text-gray-400">Positive</span>
-</div>
-</div>
-<div class="flex flex-col gap-4">
-<div class="flex items-center gap-3">
-<div class="h-3 w-3 rounded-full bg-green-500"></div>
-<div>
-<p class="font-semibold text-gray-800 dark:text-gray-200">Positive</p>
-<p class="text-sm text-gray-600 dark:text-gray-400">75%</p>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<div class="h-3 w-3 rounded-full bg-red-500"></div>
-<div>
-<p class="font-semibold text-gray-800 dark:text-gray-200">Negative</p>
-<p class="text-sm text-gray-600 dark:text-gray-400">15%</p>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<div class="h-3 w-3 rounded-full bg-gray-400 dark:bg-gray-500"></div>
-<div>
-<p class="font-semibold text-gray-800 dark:text-gray-200">Neutral</p>
-<p class="text-sm text-gray-600 dark:text-gray-400">10%</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Section Header: Top Keywords -->
-<h2 class="pt-4 text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Top Keywords</h2>
-<!-- Word Cloud Card -->
-<div class="rounded-xl bg-white dark:bg-gray-800/50 p-6 shadow-sm ring-1 ring-inset ring-gray-200 dark:ring-gray-700/80">
-<div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-medium">
-<span class="text-4xl text-green-500">great</span>
-<span class="text-2xl text-green-500">love</span>
-<span class="text-lg text-red-500">bad</span>
-<span class="text-xl text-green-500">easy</span>
-<span class="text-3xl text-green-500">fast</span>
-<span class="text-lg text-gray-400 dark:text-gray-500">okay</span>
-<span class="text-2xl text-red-500">slow</span>
-<span class="text-base text-green-500">helpful</span>
-<span class="text-xl text-green-500">amazing</span>
-<span class="text-lg text-red-500">issue</span>
-<span class="text-2xl text-gray-400 dark:text-gray-500">fine</span>
-<span class="text-3xl text-red-500">problem</span>
-<span class="text-xl text-green-500">perfect</span>
-</div>
-</div>
-</div>
-</div>
-</body></html>
-<!DOCTYPE html>
+                    <div class="history-section">
+                        <h3><i class="fas fa-history"></i> Recent Analyses</h3>
+                        <div id="history-list" class="history-list">
+                            <p class="no-history">No analyses yet. Try analyzing some text!</p>
+                        </div>
+                        <button id="clear-history-btn" onclick="clearHistory()" class="clear-history-btn">
+                            <i class="fas fa-trash"></i> Clear History
+                        </button>
+                    </div>
+                </div>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Settings - Sentiment Analysis</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#137fec",
-            "background-light": "#f6f7f8",
-            "background-dark": "#101922",
-          },
-          fontFamily: {
-            "display": ["Space Grotesk", "sans-serif"]
-          },
-          borderRadius: {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-        },
-      },
-    }
-  </script>
-<style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-  </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative flex min-h-screen w-full flex-col">
-<!-- Top App Bar -->
-<header class="flex shrink-0 items-center justify-between bg-background-light/[.85] dark:bg-background-dark/[.85] p-4 backdrop-blur-sm sticky top-0 z-10 border-b border-white/5">
-<div class="flex size-10 shrink-0 items-center justify-center">
-<span class="material-symbols-outlined text-gray-800 dark:text-white text-2xl">arrow_back</span>
-</div>
-<h1 class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-gray-900 dark:text-white">Settings</h1>
-<div class="size-10 shrink-0"></div> <!-- Spacer for centering title -->
-</header>
-<main class="flex-1 px-4 pt-6 pb-24">
-<div class="mx-auto max-w-2xl space-y-8">
-<!-- Appearance Section -->
-<section>
-<h2 class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-4 pb-2">Appearance</h2>
-<div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-black/20">
-<div class="flex items-center gap-4 p-4">
-<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined">dark_mode</span>
-</div>
-<p class="flex-1 truncate text-base font-medium text-gray-900 dark:text-white">Dark Mode</p>
-<div class="shrink-0">
-<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full bg-gray-200 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary dark:bg-white/10">
-<span class="h-full w-[27px] rounded-full bg-white transition-transform" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></span>
-<input checked="" class="invisible absolute" type="checkbox"/>
-</label>
-</div>
-</div>
-</div>
-</section>
-<!-- API Management Section -->
-<section>
-<h2 class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-4 pb-2">API Access</h2>
-<div class="flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-black/20">
-<a class="flex items-center gap-4 p-4 transition-colors hover:bg-gray-50 dark:hover:bg-white/5" href="#">
-<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined">key</span>
-</div>
-<p class="flex-1 truncate text-base font-medium text-gray-900 dark:text-white">Manage API Key</p>
-<div class="shrink-0 text-gray-400 dark:text-gray-500">
-<span class="material-symbols-outlined">chevron_right</span>
-</div>
-</a>
-</div>
-</section>
-<!-- User Preferences Section -->
-<section>
-<h2 class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-4 pb-2">Preferences</h2>
-<div class="flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-black/20">
-<!-- Default Analysis Model -->
-<a class="flex items-center gap-4 p-4 transition-colors hover:bg-gray-50 dark:hover:bg-white/5" href="#">
-<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined">model_training</span>
-</div>
-<div class="flex-1">
-<p class="truncate text-base font-medium text-gray-900 dark:text-white">Default Analysis Model</p>
-<p class="text-sm text-gray-500 dark:text-gray-400">Advanced v2</p>
-</div>
-<div class="shrink-0 text-gray-400 dark:text-gray-500">
-<span class="material-symbols-outlined">chevron_right</span>
-</div>
-</a>
-<hr class="border-gray-200 dark:border-gray-800"/>
-<!-- Clear History -->
-<div class="flex items-center gap-4 p-4">
-<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined">history_toggle_off</span>
-</div>
-<p class="flex-1 truncate text-base font-medium text-gray-900 dark:text-white">Clear history on exit</p>
-<div class="shrink-0">
-<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full bg-gray-200 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary dark:bg-white/10">
-<span class="h-full w-[27px] rounded-full bg-white transition-transform" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></span>
-<input class="invisible absolute" type="checkbox"/>
-</label>
-</div>
-</div>
-</div>
-</section>
-</div>
-</main>
-<!-- Footer / Save Button -->
-<footer class="fixed bottom-0 left-0 w-full bg-background-light/[.85] dark:bg-background-dark/[.85] backdrop-blur-sm border-t border-white/5">
-<div class="mx-auto max-w-2xl p-4">
-<button class="w-full rounded-lg bg-primary px-5 py-3 text-base font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:bg-primary/50 disabled:text-white/70" disabled="">
-          Save Changes
-        </button>
-<p class="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">Version 1.0.2</p>
-</div>
-</footer>
-</div>
-</body></html>
+                <!-- Batch Analysis Tab -->
+                <div id="batch-tab" class="tab-content">
+                    <div class="batch-section">
+                        <div class="file-upload-section">
+                            <div class="file-upload-area" id="file-upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop your CSV file here or click to browse</p>
+                                <p class="file-info">Supports CSV files with a 'text' column</p>
+                                <input type="file" id="file-input" accept=".csv" style="display: none;">
+                                <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+                                    <i class="fas fa-folder-open"></i> Choose File
+                                </button>
+                            </div>
+                            <div id="file-info" class="file-info-display"></div>
+                        </div>
+
+                        <div class="batch-actions">
+                            <button id="batch-predict-btn" onclick="batchPredict()" disabled>
+                                <i class="fas fa-play"></i> Analyze Batch
+                            </button>
+                            <button id="clear-batch-btn" onclick="clearBatch()">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+
+                        <div class="batch-results-section">
+                            <h3><i class="fas fa-table"></i> Batch Results</h3>
+                            <div id="batch-results" class="batch-results-table">
+                                <p class="no-results">Upload a CSV file and click "Analyze Batch" to see results</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <p>Powered by Machine Learning & Flask</p>
+            </footer>
+        </div>
+    </div>
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-cog fa-spin"></i>
+            <p>Analyzing sentiment...</p>
+        </div>
+    </div>
+
+    <script src="../static/js/app.js"></script>
+</body>
+</html>
