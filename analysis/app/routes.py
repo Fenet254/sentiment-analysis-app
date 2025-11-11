@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 
 model = joblib.load("model/sentiment_model.pkl")
 
+
 @app.route('/')
 def index():
     return render_template("index.html")
