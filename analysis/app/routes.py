@@ -15,6 +15,7 @@ from app.utils import preprocess_text
 
 # Enable CORS for Next.js frontend
 
+
 CORS(app)
 
 # Set up logging
