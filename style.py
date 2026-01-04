@@ -16,6 +16,7 @@ body {
 .background {
     background: url('../../static/css/image.png') no-repeat center center fixed;
     background-size: cover;
+
     min-height: 100vh;
     position: relative;
 }
