@@ -1,4 +1,4 @@
-tg
+ftg
 * {
     margin: 0;
     padding: 0;
