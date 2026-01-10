@@ -1,7 +1,7 @@
 zdgtghsgsuzzzgcgvhgggghcaggggzgggzhhh xccdcfgvhxefdftg
 * {
     margin: 0;
-    padding: 0;
+    padding: 0;h
     box-sizing: border-box;
 }
 
